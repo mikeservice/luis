@@ -1,4 +1,4 @@
-# LeanRank Coupon Scraper
+# Demo Coupon Scraper
 
 System to scrape coupons from stores
 
