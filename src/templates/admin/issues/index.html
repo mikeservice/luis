@@ -1,0 +1,80 @@
+{% extends "layouts/layout.html" %}
+
+{% block navbar %}
+{% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'layouts/sidebar.html' %}
+{% endblock %} 
+
+{% block content %}
+    <div class="content-wrapper">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible" proxy="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <section class="content-header">
+            <h1>
+                <i class="fa fa-balance-scale"></i>
+                Issues
+                <small>List of issues</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('home.dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li class="active">Issues</li>
+            </ol>
+        </section>
+        
+        <section class="content row">
+            <div class="col-xs-12">
+                <table class="table table-bordered" id="issues-table" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Subject</th>
+                            <th>Content</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for issue in issues %}
+                        <tr class="vertical-middle">
+                            <td>{{ issue.id }}</td>
+                            <td>{{ issue.subject }}</td>
+                            <td class="capitalized">{{ issue.status }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-default" data-issue-id="{{ issue.id }}" >
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-default" data-issue-id="{{ issue.id }}" >
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% include 'layouts/footer.html' %}
+{% endblock %}
+
+{% block aside %}
+{% include 'layouts/aside.html' %}
+{% endblock %}
+
+{% block custom_js %}
+</script>
+{% endblock %}

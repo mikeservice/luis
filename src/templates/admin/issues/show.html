@@ -1,0 +1,59 @@
+{% extends "layouts/layout.html" %}
+
+{% block navbar %}
+{% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'layouts/sidebar.html' %}
+{% endblock %} 
+
+{% block content %}
+    <div class="content-wrapper">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <section class="content-header">
+            <h1>
+                <i class="fa fa-balance-scale"></i>
+                Candidates
+                <small>List view of candidates</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('home.dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li><a href="{{ url_for('files.index') }}"><i class="fa fa-dashboard"></i>Files</a></li>
+                <li class="active">Show</li>
+            </ol>
+        </section>
+        
+        <section class="content">
+            <div class="col-lg-6 col-md-8 col-sm-10 col-sm-offset-1 col-xs-12">
+                <form method="post" enctype="multipart/form-data" action="{{ url_for('files.show', id=id) }}">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% include 'layouts/footer.html' %}
+{% endblock %}
+
+{% block aside %}
+{% include 'layouts/aside.html' %}
+{% endblock %}
+
+{% block custom_js %}
+</script>
+{% endblock %}

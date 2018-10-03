@@ -1,0 +1,101 @@
+{% extends "layouts/layout.html" %}
+
+{% block navbar %}
+{% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'layouts/sidebar.html' %}
+{% endblock %} 
+
+{% block content %}
+    <div class="content-wrapper">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible" proxy="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <section class="content-header">
+            <h1>
+                <i class="fa fa-balance-scale"></i>
+                Stores
+                <small>List of stores</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('home.dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li class="active">Stores</li>
+            </ol>
+        </section>
+        
+        <section class="content row">
+            <div class="col-xs-12" style="padding-bottom:10px;">
+                <div class="row">
+                    {% if current_user.is_admin %}
+                    <form method="post">
+                        <button type="submit" class="btn btn-sm btn-default pull-right">
+                            <i class="fa fa-database"></i> 
+                            Refresh Stores
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <table class="table table-bordered" id="stores-table" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Source</th>
+                            <th>Start URL</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for store in stores %}
+                        <tr class="vertical-middle">
+                            <td>{{ store.id }}</td>
+                            <td class="capitalized">{{ store.name }}</td>
+                            <td class="capitalized">{{ store.source.name if store.source else '' }}</td>
+                            <td>{{ store.source.base_url + " " + store.start_point }}</td>
+                            <td>
+                                {% if store.job_uid %}
+                                {{ tasks[store.job_uid]['status']}}
+                                {% else %}
+                                {{ store.status }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-default" data-store-id="{{ store.id }}" >
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-default" data-store-id="{{ store.id }}" >
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% include 'layouts/footer.html' %}
+{% endblock %}
+
+{% block aside %}
+{% include 'layouts/aside.html' %}
+{% endblock %}
+
+{% block custom_js %}
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "layouts/layout.html" %}
+
+{% block navbar %}
+{% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'layouts/sidebar.html' %}
+{% endblock %} 
+
+{% block content %}
+    <div class="content-wrapper">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible" proxy="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <section class="content-header">
+            <h1>
+                <i class="fa fa-balance-scale"></i>
+                Tasks
+                <small>List of tasks</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('home.dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li class="active">Tasks</li>
+            </ol>
+        </section>
+        
+        <section class="content row">
+            <!-- <div class="col-xs-12" style="padding-bottom:10px;">
+                <div class="row">
+                    {% if current_user.is_admin %}
+                    <form method="post">
+                        <button type="submit" class="btn btn-sm btn-default pull-right">
+                            <i class="fa fa-database"></i> 
+                            Refresh Tasks
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div> -->
+            <div class="col-xs-12">
+                {% if task %}
+                <a href="{{ url_for('tasks.detail', id=task.id) }}" class="btn btn-primary">Check Task</a>
+                {% endif %}
+                <table class="table table-bordered" id="tasks-table" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th max-width="90px">ID</th>
+                            <th max-width="180px">Store</th>
+                            <th max-width="140px">Source</th>
+                            <th>State</th>
+                            <th max-width="80px">Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% include 'tasks/_tbody.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% include 'layouts/footer.html' %}
+{% endblock %}
+
+{% block aside %}
+{% include 'layouts/aside.html' %}
+{% endblock %}
+
+{% block custom_js %}
+</script>
+{% endblock %}

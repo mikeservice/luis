@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name 18.217.69.71;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/var/www/coupon_scraper/coupon_scraper.sock;
+    }
+}

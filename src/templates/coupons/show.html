@@ -1,0 +1,95 @@
+{% extends "layouts/layout.html" %}
+
+{% block navbar %}
+{% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'layouts/sidebar.html' %}
+{% endblock %} 
+
+{% block content %}
+    <div class="content-wrapper">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <section class="content-header">
+            <h1>
+                <i class="fa fa-balance-scale"></i>
+                Candidates
+                <small>List view of candidates</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('home.dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li><a href="{{ url_for('coupons.index') }}"><i class="fa fa-dashboard"></i>Coupons</a></li>
+                <li class="active">Show</li>
+            </ol>
+        </section>
+        
+        <section class="content">
+            <div class="col-xs-12">
+                <form method="post" enctype="multipart/form-data" action="{{ url_for('coupons.show', id=id) }}">
+                    {% if coupon.title_changed %}
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <label class="control-label">Original Title</label>
+                            <input type="text" class="form-control" value="{{ coupon.original_title }}" disabled />
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label class="control-label">WordAI Result</label>
+                            <input type="text" class="form-control" value="{{ coupon.title }}" disabled />
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="form-group">
+                        <label class="control-label">Title</label>
+                        <input type="text" class="form-control" value="{{ coupon.original_title }}" disabled />
+                    </div>
+                    {% endif %}
+
+                    {% if coupon.description_changed %}
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <label class="control-label">Original Description</label>
+                            <textarea class="form-control" rows="5" disabled >{{ coupon.original_description }}</textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label class="control-label">WordAI Result</label>
+                            <textarea class="form-control" rows="5" disabled >{{ coupon.description }}</textarea>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="form-group">
+                        <label class="control-label">description</label>
+                        <textarea class="form-control" rows="5" disabled>{{ coupon.original_description }}</textarea>
+                    </div>
+                    {% endif %}
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-xs-12">
+                            <a class="btn btn-primary pull-right" href="{{ url_for('coupons.index') }}">Back</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% include 'layouts/footer.html' %}
+{% endblock %}
+
+{% block aside %}
+{% include 'layouts/aside.html' %}
+{% endblock %}
+
+{% block custom_js %}
+</script>
+{% endblock %}

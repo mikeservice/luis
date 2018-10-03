@@ -1,0 +1,9 @@
+/.vscode
+__pycache__
+/config.py
+node_modules
+/src/env.py
+*.log
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
