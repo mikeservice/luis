@@ -36,7 +36,7 @@ PyVirtualDisplay==0.2.1
 selenium==3.11.0
 amqp==2.2.2
 billiard==3.5.0.3
-celery==4.1.0
+celery==5.2.2
 kombu==4.1.0
 pytz==2018.4
 redis==2.10.6
